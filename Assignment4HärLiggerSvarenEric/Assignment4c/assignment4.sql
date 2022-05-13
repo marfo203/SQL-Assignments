@@ -212,7 +212,7 @@ CREATE FUNCTION calculateFreeSeats(flight_number INT)
     DECLARE tickets INT; 
     DECLARE free_seats INT; 
     
-    SELECT COUNT(*) INTO tickets FROM reservation INNER JOIN ticket ON reservation.reservationnumber = ticket.ticket_resno AND reservation.resflightno = flight_number; 
+    SELECT COUNT(*) INTO tickets FROM reservation, ticket WHERE reservation.reservationnumber = ticket.ticket_resno AND reservation.resflightno = flight_number; 
     SET free_seats = 40 - tickets; 
     RETURN free_seats; 
 END; 
@@ -388,11 +388,11 @@ DECLARE ticket_number INT;
 //
 
 CREATE VIEW allFlights AS	
-	SELECT depart.cityname as departure_city_name, arrive.cityname as destination_city_name, w.time as departure_time, w.day as departure_day, f.week as departure_week, w.year as departure_year, calculateFreeSeats(f.id) AS nr_of_free_seats, calculatePrice(f.id) AS current_price_per_seat
-	FROM flight AS f INNER JOIN weeklyschedule AS w INNER JOIN route as r INNER JOIN airport as depart INNER JOIN airport as arrive 
-    WHERE f.scheduleid = w.id AND w.route = r.id AND r.arrival = arrive.id AND r.departure = depart.id;
+	SELECT depart.cityname as departure_city_name, arrive.cityname as destination_city_name, ws.time as departure_time, ws.day as departure_day, fl.week as departure_week, ws.year as departure_year, calculateFreeSeats(fl.id) AS nr_of_free_seats, calculatePrice(fl.id) AS current_price_per_seat
+	FROM flight AS fl INNER JOIN weeklyschedule AS ws INNER JOIN route as ro INNER JOIN airport as depart INNER JOIN airport as arrive 
+    WHERE fl.scheduleid = ws.id AND ws.route = ro.id AND ro.arrival = arrive.id AND ro.departure = depart.id;
 //
-
+SELECT * from route;
 SELECT * from allFlights;
 
 
