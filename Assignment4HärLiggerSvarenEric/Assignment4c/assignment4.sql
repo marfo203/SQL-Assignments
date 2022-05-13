@@ -388,11 +388,12 @@ DECLARE ticket_number INT;
 //
 
 CREATE VIEW allFlights AS	
-	SELECT depart.id as departure_city_name, arrive.id as destination_city_name, w.time as departure_time, w.day as departure_day, f.week as departure_week, w.year as departure_year, calculateFreeSeats(f.id) AS nr_of_free_seats, calculatePrice(f.id) AS current_price_per_seat
+	SELECT depart.cityname as departure_city_name, arrive.cityname as destination_city_name, w.time as departure_time, w.day as departure_day, f.week as departure_week, w.year as departure_year, calculateFreeSeats(f.id) AS nr_of_free_seats, calculatePrice(f.id) AS current_price_per_seat
 	FROM flight AS f INNER JOIN weeklyschedule AS w INNER JOIN route as r INNER JOIN airport as depart INNER JOIN airport as arrive 
     WHERE f.scheduleid = w.id AND w.route = r.id AND r.arrival = arrive.id AND r.departure = depart.id;
 //
 
+SELECT * from allFlights;
 
 
 
