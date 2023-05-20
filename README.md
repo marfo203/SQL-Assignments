@@ -1,3 +1,5 @@
-# TDDD81LAB
+# SQL Labs
+The repository contains assignments for the database course given at Linköping University.
 
-Labbar TDDD81
+## Partners
+Emilia Bylund Månsson, Martin Forsberg
